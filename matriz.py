@@ -1,6 +1,6 @@
 import numpy as np
 
-def generar_matriz(n):
+def generar_matriz_izquierda(n):
     """
     Esta función genera y regresa la matriz de tamaño NxN a patir del tamaño n ingresado el cual debe ser la longitud del arreglo de temperaturas (T_n)
     """ 
@@ -30,7 +30,12 @@ def generar_matriz(n):
 def generar_matriz_derecha(N,h,Ta,Tb,kappa,Q):
 
     """
-    docstring
+    Función que genera la matriz del lado derecho a partir de los datos de entrada 
+    N   Numero de nodos
+    h   distancia entre nodos
+    Ta,Tb condiciones de frontera
+    kappa  debe ser distinto de cero
+    Q
     """
     k=np.ones(N)*kappa
     r=k/h
@@ -49,7 +54,14 @@ def generar_matriz_derecha(N,h,Ta,Tb,kappa,Q):
 def solucion(A,b,Ta,Tb):
 
     """
-    docstring
+    Funcion que genera el vector que contiene las soluciones a partir de la resolución del sistema Ax=b
+    donde:
+    A es la matriz generada por generar_matriz_izquierda
+    
+    b es la matriz generada por generar_matriz_derecha
+
+    Ta,Tb son las condiciones de frontera
+    
     """
     N=len(b)
 
