@@ -27,3 +27,34 @@ def generar_matriz(n):
 
     return F
 
+def generar_matriz_derecha(N,h,Ta,Tb,kappa,Q):
+
+    """
+    docstring
+    """
+    k=np.ones(N)*kappa
+    r=k/h
+
+    Q2=np.ones(N)*Q
+
+    T_aux=np.zeros(N)
+    T_aux[0]=-Ta
+    T_aux[-1]=-Tb
+
+    b=(1/r)*Q2+T_aux
+
+    return b
+
+
+def solucion(A,b,Ta,Tb):
+
+    """
+    docstring
+    """
+    N=len(b)
+
+    u=np.zeros(N+2)
+    u[1:-1]=np.linalg.solve(A,b)
+    u[0]=Ta
+    u[-1]=Tb
+    return u
