@@ -1,8 +1,10 @@
 import numpy as np
 
+
+
 def generar_matriz_izquierda(n):
     """
-    Esta función genera y regresa la matriz de tamaño NxN a patir del tamaño n ingresado el cual debe ser la longitud del arreglo de temperaturas (T_n)
+        Esta función genera y regresa la matriz de tamaño NxN a patir del tamaño n ingresado el cual debe ser la longitud del arreglo de temperaturas (T_n)
     """ 
 
     F=np.zeros((n,n)) #se genera una matriz cuadrada de ceros de tamaño n 
@@ -69,4 +71,22 @@ def solucion(A,b,Ta,Tb):
     u[1:-1]=np.linalg.solve(A,b)
     u[0]=Ta
     u[-1]=Tb
+    return u
+
+
+
+def solucion_sistema1D(N,h,Ta,Tb,kappa,Q):
+    """
+    Funcion que utiliza las funciones:
+
+    generar_matriz_izquierda
+    generar_matriz_derecha
+    solucion
+
+    para regresar la solución del sistema apartir de los parámetros de entrada
+    """
+    A=generar_matriz_izquierda(N)
+    b=generar_matriz_derecha(N,h,Ta,Tb,kappa,Q)
+
+    u=solucion(A,b,Ta,Tb)
     return u
