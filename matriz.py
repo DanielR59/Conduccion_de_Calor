@@ -1,5 +1,5 @@
 import numpy as np
-
+from graficas import plot_dominio, plot_dominio2
 
 
 def generar_matriz_izquierda(n):
@@ -90,7 +90,25 @@ def solucion_sistema1D(N,h,Ta,Tb,kappa,Q):
 
     u=solucion(A,b,Ta,Tb)
     return u
+#################intento interactivo##############
+def solucion_sistema1D_interactive(N,Ta,Tb,kappa,Q,x_inicial,x_final):
+    """
+    Funcion que utiliza las funciones:
 
+    generar_matriz_izquierda
+    generar_matriz_derecha
+    solucion
+
+    para regresar la solución del sistema apartir de los parámetros de entrada
+    """
+    h=(x_final-x_inicial)/(N+1)
+    plot_dominio(x_inicial,x_final,N)
+    A=generar_matriz_izquierda(N)
+    b=generar_matriz_derecha(N,h,Ta,Tb,kappa,Q)
+    x=[i for i in np.arange(x_inicial,x_final+h,h)]
+    u=solucion(A,b,Ta,Tb)
+    plot_dominio2(x_inicial,x_final,N,u,Ta,Tb)
+    return u
 
 #####################################################################################################################################################################################################################################################################################################################################################################
 
