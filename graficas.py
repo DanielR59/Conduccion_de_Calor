@@ -13,14 +13,23 @@ def plot_dominio(x_inicial,x_final,Nodos):
     plt.plot([x[1:-1],x[1:-1]],[0,0], 'ko')
     plt.legend(['','$T_a$','$T_b$','Nodos'])
     plt.show()
+
+def plot_dominio2(x_inicial,x_final,N,u):
+    """
+    docstring
+    """
     
-def plot_trans_calor
-    h=(x_final-x_inicial)/(Nodos+1)
-    x=[h*i for i in range(Nodos+2)]
+    h=(x_final-x_inicial)/(N+1)
+    x=[h*i for i in range(N+2)]
+    u
     plt.plot(x,u,'^-r', label='$q$')
     plt.xlabel('$x$')
     plt.ylabel('Temperatura')
-    plt.title('Transferencia_de_calor')
+    plt.title('Transferencia de calor')
     plt.legend()
     plt.show()
+    
+
+
+
 
