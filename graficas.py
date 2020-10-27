@@ -21,14 +21,14 @@ def plot_dominio2(x_inicial,x_final,N,u,Ta,Tb):
     
     h=(x_final-x_inicial)/(N+1)
     x=[h*i for i in range(N+2)]
-    u
-    plt.plot(x,u,'^-r',label='$q$')
-    plt.plot(x_inicial,Ta, marker="o", color="blue",label='$Ta$')
-    plt.plot(x_final,Tb, marker="o", color="green",label='$Tb$')
+    
+    
+    plt.scatter(x,u,c=u,cmap='plasma')
+    plt.colorbar()
     plt.xlabel('$x$')
     plt.ylabel('Temperatura')
     plt.title('Transferencia de calor')
-    plt.legend()
+    #plt.legend()
     plt.show()
     
 
