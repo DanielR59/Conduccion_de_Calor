@@ -1,7 +1,7 @@
 import numpy as np
 from graficas import plot_dominio, plot_dominio2
 
-
+#############DIRICHLET##########################################################################
 def generar_matriz_izquierda(n):
     """
     Esta función genera y regresa la matriz de tamaño NxN a patir del tamaño n ingresado el cual debe ser la longitud del arreglo de temperaturas (T_n)
@@ -155,6 +155,117 @@ def solucion_sistema1D_interactive(N,Ta,Tb,kappa,Q,x_inicial,x_final):
     u=solucion(A,b,Ta,Tb)
     plot_dominio2(x_inicial,x_final,N,u,Ta,Tb)
     return u
+
+###########################NEUMANN################################################################
+#--------------------------NEUMANN------------------------------------------------------------##
+
+def solucion_sistema1D_Neumann(N,h,kappa,Q,Ta,Tb,tipo):
+    """
+    Funcion que utiliza las funciones:
+
+    generar_matriz_izquierda
+    generar_matriz_derecha
+    solucion
+
+    para regresar la solución de la ecuacion de Poisson a partir de los parámetros de entrada
+
+
+    Args:
+        N (entero): Numero de nodos del sistema sin contar las fronteras 
+        h ([type]): Espaciamiento entre los nodos
+        Ta ([type]): Condicion de frontera inicial
+        Tb ([type]): Condicion de frontera final
+        f ([type]): coeficiente al cual está igualado en la ecuación de Poisson
+
+    Returns:
+        u[type]: Solucion del sistema
+    """
+    A=generar_matriz_izquierda(N+1)
+
+    if tipo=="izquierda":
+        A[0,0]=-1
+        b=generar_matriz_derecha_Neumann(N+1,h,Ta,Tb,kappa,Q[:-1],tipo)
+    elif tipo=="derecha":
+        A[-1,-1]=-1
+        b=generar_matriz_derecha_Neumann(N+1,h,Ta,Tb,kappa,Q[1:],tipo)
+      
+    
+
+    u=solucion_Neumman(A,b,Ta,Tb,tipo)
+    
+    return u
+
+def generar_matriz_derecha_Neumann(N,h,Ta,Tb,kappa,Q,tipo):
+    """
+    Función que genera la matriz del lado derecho a partir de los datos de entrada 
+    
+    Args:
+        N (entero): Numero de nodos del sistema sin incluir las fronteras
+        h ([type]): distancia entre nodos
+        Ta ([type]): Condicion de frontera inicial
+        Tb ([type]): Condicion de frontera final
+        kappa ([type]): conductvidad del material, debe ser una constante >0 si no explota
+        Q ([type]): [description]
+
+    Returns:
+        b[type]: matriz del lado derecho del sistema
+    """
+
+
+    k=np.ones(N)*kappa
+    r=k/(h**2)
+    T_aux=np.zeros(N)
+    
+    if tipo=="izquierda":
+        Q[0]=Q[0]/2
+        T_aux[0]=-h*Ta
+        T_aux[-1]=-Tb
+    
+    elif tipo=="derecha":
+        Q[-1]=Q[-1]/2
+        T_aux[0]=-Ta
+        T_aux[-1]=-h*Tb
+    
+    Q2=np.ones(N)*Q
+
+    
+
+    b=(1/r)*Q2+T_aux
+
+    return b
+
+
+def solucion_Neumman(A,b,Ta,Tb,tipo):
+
+    """
+    Funcion que genera el vector que contiene las soluciones a partir de la resolución del sistema Ax=b
+    donde:
+    A es la matriz generada por generar_matriz_izquierda
+    
+    b es la matriz generada por generar_matriz_derecha
+
+    Ta,Tb son las condiciones de frontera
+    
+    """
+    N=len(b)
+
+    u=np.zeros(N+1)
+    
+    
+    
+    if tipo=="izquierda":
+        u[:-1]=np.linalg.solve(A,b)
+        u[-1]=Tb
+    
+    elif tipo=="derecha":
+        u[1:]=np.linalg.solve(A,b)
+        u[0]=Ta
+    return u
+
+    
+
+
+
 
 #####################################################################################################################################################################################################################################################################################################################################################################
 
