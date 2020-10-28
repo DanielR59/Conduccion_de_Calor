@@ -4,9 +4,15 @@ from graficas import plot_dominio, plot_dominio2
 
 def generar_matriz_izquierda(n):
     """
-        Esta función genera y regresa la matriz de tamaño NxN a patir del tamaño n ingresado el cual debe ser la longitud del arreglo de temperaturas (T_n)
-    """ 
+    Esta función genera y regresa la matriz de tamaño NxN a patir del tamaño n ingresado el cual debe ser la longitud del arreglo de temperaturas (T_n)
+    
+    Args:
+        n (integer): Numero de nodos del sistema sin incluir las fronteras
 
+    Returns:
+        F: matriz de tamaño NxN 
+    """
+    
     F=np.zeros((n,n)) #se genera una matriz cuadrada de ceros de tamaño n 
 
     #Se llenan la primer y ultima fila de la matríz
@@ -30,15 +36,22 @@ def generar_matriz_izquierda(n):
     return F
 
 def generar_matriz_derecha(N,h,Ta,Tb,kappa,Q):
-
     """
     Función que genera la matriz del lado derecho a partir de los datos de entrada 
-    N   Numero de nodos
-    h   distancia entre nodos
-    Ta,Tb condiciones de frontera
-    kappa  debe ser distinto de cero
-    Q
+    
+    Args:
+        N (entero): Numero de nodos del sistema sin incluir las fronteras
+        h ([type]): distancia entre nodos
+        Ta ([type]): Condicion de frontera inicial
+        Tb ([type]): Condicion de frontera final
+        kappa ([type]): conductvidad del material, debe ser una constante >0 si no explota
+        Q ([type]): [description]
+
+    Returns:
+        b[type]: matriz del lado derecho del sistema
     """
+
+
     k=np.ones(N)*kappa
     r=k/(h**2)
 
@@ -90,6 +103,39 @@ def solucion_sistema1D(N,h,Ta,Tb,kappa,Q):
 
     u=solucion(A,b,Ta,Tb)
     return u
+
+
+def solucion_sistema1D_Poisson(N,h,Ta,Tb,f):
+    """
+    Funcion que utiliza las funciones:
+
+    generar_matriz_izquierda
+    generar_matriz_derecha
+    solucion
+
+    para regresar la solución de la ecuacion de Poisson a partir de los parámetros de entrada
+
+
+    Args:
+        N (entero): Numero de nodos del sistema sin contar las fronteras 
+        h ([type]): Espaciamiento entre los nodos
+        Ta ([type]): Condicion de frontera inicial
+        Tb ([type]): Condicion de frontera final
+        f ([type]): coeficiente al cual está igualado en la ecuación de Poisson
+
+    Returns:
+        u[type]: Solucion del sistema
+    """
+        
+
+    
+    A=generar_matriz_izquierda(N)+np.eye(N)*(f*h)**2
+    Q=0;kappa=1
+    b=generar_matriz_derecha(N,h,Ta,Tb,kappa,Q)
+
+    u=solucion(A,b,Ta,Tb)
+    
+    return u
 #################intento interactivo##############
 def solucion_sistema1D_interactive(N,Ta,Tb,kappa,Q,x_inicial,x_final):
     """
@@ -113,9 +159,15 @@ def solucion_sistema1D_interactive(N,Ta,Tb,kappa,Q,x_inicial,x_final):
 #####################################################################################################################################################################################################################################################################################################################################################################
 
 def k_half(k):
+    """Funcion que genera los valores auxiliares $k_{\frac{1}{2}}$ para la solución de la ecuación de conducción de calor de conductividad no constante.
+
+    Args:
+        k (array): vector de conductividad variable, debe ser de tamaño N+2, es decir, debe considerar el numero de nodos N+2 fronteras
+
+    Returns:
+        array: valores interpolados entre los valores de k, o sea k_medios 
     """
-    k debe ser del tamaño de las soluciones, es decir N+2
-    """
+
     n=len(k)
     k_medios=np.zeros(n-1)
 
