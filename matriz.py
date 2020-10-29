@@ -176,6 +176,7 @@ def solucion_sistema1D_Neumann(N,h,kappa,Q,Ta,Tb,tipo):
         Ta ([type]): Condicion de frontera inicial
         Tb ([type]): Condicion de frontera final
         f ([type]): coeficiente al cual está igualado en la ecuación de Poisson
+        tipo([string]) "izquierda" o "derecha" frontera en la cual se tiene la condicion de Neumann
 
     Returns:
         u[type]: Solucion del sistema
