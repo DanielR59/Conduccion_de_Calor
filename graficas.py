@@ -11,7 +11,7 @@ def plot_dominio(x_inicial,x_final,Nodos):
     
     h=(x_final-x_inicial)/(Nodos+1)
     #x=[h*i for i in range(Nodos+2)]
-    x=[i for i in np.arange(x_inicial,x_final+h,h)]
+    x=np.linspace(x_inicial,x_final,Nodos+2)
     plt.plot([x_inicial,x_final],[0,0], lw=10)
     plt.plot([x_inicial,x_inicial],[0,0], 'sr', )
     plt.plot([x_final,x_final],[0,0], 'sg', )
@@ -19,7 +19,7 @@ def plot_dominio(x_inicial,x_final,Nodos):
     plt.legend(['','$T_a$','$T_b$','Nodos'])
     plt.show()
 
-def plot_dominio2(x_inicial,x_final,N,u,Ta,Tb):
+def plot_dominio2(x,u):
     """Funcion que genera la grafica del resultado final de la conducción de calor en 1D estacionaria, a partir de valores de entrada
 
     Args:
@@ -31,14 +31,6 @@ def plot_dominio2(x_inicial,x_final,N,u,Ta,Tb):
         Tb ([type]): Condicion de frontera derecha
     """
     
-    h=(x_final-x_inicial)/(N+1)
-    x=[i for i in np.arange(x_inicial,x_final+h,h)]
-    if len(u)<len(x):
-        
-        x[-2]=Tb
-        x.pop(-1)
-
-    #x=[h*i for i in range(N+2)]
     
     
     plt.scatter(x,u,c=u,cmap='plasma')

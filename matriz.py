@@ -151,9 +151,9 @@ def solucion_sistema1D_interactive(N,Ta,Tb,kappa,Q,x_inicial,x_final):
     plot_dominio(x_inicial,x_final,N)
     A=generar_matriz_izquierda(N)
     b=generar_matriz_derecha(N,h,Ta,Tb,kappa,Q)
-    x=[i for i in np.arange(x_inicial,x_final+h,h)]
+    x=np.linspace(x_inicial,x_final,N+2)
     u=solucion(A,b,Ta,Tb)
-    plot_dominio2(x_inicial,x_final,N,u,Ta,Tb)
+    plot_dominio2(x,u)
     return u
 
 ###########################NEUMANN################################################################
@@ -189,7 +189,7 @@ def solucion_sistema1D_Neumann(N,h,kappa,Q,Ta,Tb,tipo):
     elif tipo=="derecha":
         A[-1,-1]=-1
         b=generar_matriz_derecha_Neumann(N+1,h,Ta,Tb,kappa,Q[1:],tipo)
-      
+    
     
 
     u=solucion_Neumman(A,b,Ta,Tb,tipo)
@@ -302,8 +302,8 @@ def matriz_izquierda_conductividad_variable(k):
     MATRIZ[-1,-1]=(k_medios[-2]+k_medios[-1])*-1
     MATRIZ[-1,-2]=k_medios[-2]
     for i in range(1,n-3):
-       v_aux=[k_medios[i],(k_medios[i]+k_medios[i+1])*-1,k_medios[i+1]]
-       MATRIZ[i,(i-1):i+2]=v_aux
+        v_aux=[k_medios[i],(k_medios[i]+k_medios[i+1])*-1,k_medios[i+1]]
+        MATRIZ[i,(i-1):i+2]=v_aux
     return MATRIZ
 
 
