@@ -24,16 +24,17 @@ def plot_dominio(x_inicial,x_final,Nodos,**kwars):
     pass
 
 def plot_dominio2(x,u,**kwars):
-    """Funcion que genera la grafica del resultado final de la conducción de calor en 1D estacionaria, a partir de valores de entrada
+    """
+    Funcion que genera la grafica del resultado final de la conducción de calor en 1D estacionaria, a partir de valores de entrada
+
 
     Args:
-        x_inicial ([type]): Punto inicial del sistema 1D
-        x_final ([type]): Punto final del sistema 1D
-        N ([type]): Numero de nodos del sistema en los cuales se calcula la teperatura
-        u ([type]): Solución del sistema
-        Ta ([type]): Condicion de frontera izquierda
-        Tb ([type]): Condicion de frontera derecha
+        x ([type]): Dominio x
+        u ([type]): solucion, x y u deben tener la misma longitud
     """
+    
+
+
     Nodos=len(u)-2
     plt.figure()
     plt.scatter(x,u,c=u,cmap='plasma',zorder=1)

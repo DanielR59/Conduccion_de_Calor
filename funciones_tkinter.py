@@ -3,7 +3,7 @@ import tkinter
 from tkinter import messagebox
 from graficas import *
 from matriz import solucion_sistema1D, solucion_sistema1D_Poisson, solucion_sistema1D_Neumann,solucion_sistema_conductividad_variable
-from Parametros import get_Parametros_basicos
+from Parametros import get_Parametros_basicos,save_Parametros
 from PIL import Image,ImageTk
 
 def Proceso1(diccionario):
@@ -17,6 +17,7 @@ def Proceso1(diccionario):
     Q=float(diccionario['Q'].get())
     plot_dominio(x_inicial,x_final,N,cadena='Conduccion de calor estacionaria, conductividad constante')
     u=solucion_sistema1D(N,h,Ta,Tb,kappa,Q)
+    save_Parametros(diccionario,x,u,cadena='Conduccion de calor estacionaria, conductividad constante')
     
     plot_dominio2(x,u,cadena='Conduccion de calor estacionaria, conductividad constante')
 
@@ -28,8 +29,10 @@ def Proceso2(diccionario):
     # print(diccionario['x_final'].get())
     x_inicial,x_final,N,Ta,Tb,h,x=get_Parametros_basicos(diccionario)
     f=float(diccionario['f'].get())
-    plot_dominio(x_inicial,x_final,N,cadena='Conduccion de calor estacionaria, conductividad constante')
+    plot_dominio(x_inicial,x_final,N,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Dirichlet')
     u=solucion_sistema1D_Poisson(N, h,Ta,Tb,f)
+    save_Parametros(diccionario,x,u,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Dirichlet')
+    
     plot_dominio2(x,u,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Dirichlet')
 
 def Proceso3(diccionario):
@@ -45,9 +48,9 @@ def Proceso3(diccionario):
     print(Q)
     Tipo=diccionario['Tipo'].get()
     u = solucion_sistema1D_Neumann(N,h,kappa,Q,Ta,Tb,Tipo)
+    save_Parametros(diccionario,x,u,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Neumman')
+    
     plot_dominio2(x,u,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Neumman')
-
-
 
 def Proceso4(diccionario):
     """
@@ -55,14 +58,15 @@ def Proceso4(diccionario):
     """
     
     x_inicial,x_final,N,Ta,Tb,h,x=get_Parametros_basicos(diccionario)
-    plot_dominio(x_inicial,x_final,N,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Neumman')
+    plot_dominio(x_inicial,x_final,N,cadena='Conduccion de calor, ecuacion de Poisson conductividad no constante')
     
     Q=float(diccionario['Q'].get())
     kappa=eval(diccionario['kappa'].get())
     
     u=solucion_sistema_conductividad_variable(N,h,Ta,Tb,kappa,Q)
+    save_Parametros(diccionario,x,u,cadena='Conduccion de calor, ecuacion de Poisson conductividad no constante')
+    
     plot_dominio2(x,u,cadena='Conduccion de calor, ecuacion de Poisson conductividad no constante')
-
 
 
 
@@ -82,13 +86,13 @@ def opcion1(ventana):
     L0=tkinter.Label(opciones,image= myImg).grid(row=0,column=0,columnspan=2)
     
 
-    L1=tkinter.Label(opciones, text ='x inicial :').grid(row=1,column=0)
+    L1=tkinter.Label(opciones, text ='x inicial (m) :').grid(row=1,column=0)
     x_inicial = tkinter.Entry(opciones)
     x_inicial.grid(row =1,column=1)
     
 
 
-    L2=tkinter.Label(opciones, text ='x final :').grid(row=2,column=0)
+    L2=tkinter.Label(opciones, text ='x final (m):').grid(row=2,column=0)
     x_final = tkinter.Entry(opciones)
     x_final.grid(row =2,column=1)
 
@@ -96,19 +100,19 @@ def opcion1(ventana):
     Nodos = tkinter.Entry(opciones)
     Nodos.grid(row =3,column=1)
 
-    L4=tkinter.Label(opciones, text ='Temperatura en la frontera A      : A =  :').grid(row=4,column=0)
+    L4=tkinter.Label(opciones, text ='Temperatura en la frontera A (K)     : A =  :').grid(row=4,column=0)
     Ta = tkinter.Entry(opciones)
     Ta.grid(row =4,column=1)
 
-    L5=tkinter.Label(opciones, text ='Temperatura en la frontera B      : B =  :').grid(row=5,column=0)
+    L5=tkinter.Label(opciones, text ='Temperatura en la frontera B (K)     : B =  :').grid(row=5,column=0)
     Tb = tkinter.Entry(opciones)
     Tb.grid(row =5,column=1)
 
-    L6=tkinter.Label(opciones, text ='Conductividad termica kappa  :').grid(row=6,column=0)
+    L6=tkinter.Label(opciones, text ='Conductividad termica kappa (W/m) :').grid(row=6,column=0)
     kappa = tkinter.Entry(opciones)
     kappa.grid(row = 6,column=1)
 
-    L7=tkinter.Label(opciones, text ='Fuente (-) o sumidero Q (+)').grid(row=7,column=0)
+    L7=tkinter.Label(opciones, text ='Fuente (-) o sumidero (+) Q(WK/m^3) :  ').grid(row=7,column=0)
     Q = tkinter.Entry(opciones)
     Q.grid(row = 7,column=1)
 
