@@ -10,5 +10,7 @@ Autores :
 - Daniel Rosas
 
 Programas principales: 
+
 CC_tkinter.py Implementacion grafica
+
 ConduccionDeCalorCLI.py Implementacion en linea de comandos
