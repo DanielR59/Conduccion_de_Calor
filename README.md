@@ -2,6 +2,8 @@
 
 Geofísica Matemática Computacional (2021-1) 
 
+Equipo Dorado
+
 Autores :
 - Alan Bonfil
 - Abraham Flores
