@@ -1,5 +1,6 @@
 #import numpy as np
 import tkinter
+import os
 #from tkinter import messagebox
 # from graficas import *
 # from matriz import solucion_sistema1D, solucion_sistema1D_Poisson, solucion_sistema1D_Neumann,solucion_sistema_conductividad_variable
@@ -7,6 +8,13 @@ import tkinter
 # from PIL import Image,ImageTk
 from funciones_tkinter import *
 
+#Creamos carpetas auxiliares
+try:
+    os.mkdir('Imagenes')
+    os.mkdir('Soluciones')
+except FileExistsError:
+    pass
+#
 ventana = tkinter.Tk()
 ventana.geometry("400x300")
 my_menu = tkinter.Menu(ventana)
