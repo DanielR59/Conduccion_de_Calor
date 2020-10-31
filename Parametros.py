@@ -1,5 +1,7 @@
 import numpy as np
 import sys
+
+
 def Pedir_Parametros_basicos():
     
     x_inicial= float(input('| Punto inicial del dominio : x_inicial =  '))
@@ -13,6 +15,7 @@ def Pedir_Parametros_basicos():
     x=np.linspace(x_inicial,x_final,N+2)
 
     return x_inicial,x_final,N,Ta,Tb,h,x
+
 
 def menu():
     """
@@ -30,3 +33,19 @@ def menu():
         print("No seas ñero")
         sys.exit()
     return seleccion
+
+
+def get_Parametros_basicos(diccionario):
+
+    x_inicial=float(diccionario['x_inicial'].get())
+    x_final=float(diccionario['x_final'].get())
+    N=int(diccionario['Nodos'].get())
+    Ta=float(diccionario['Ta'].get())
+    Tb=float(diccionario['Tb'].get())
+    
+    
+    h=(x_final-x_inicial)/(N+1)
+
+    x=np.linspace(x_inicial,x_final,N+2)
+
+    return x_inicial,x_final,N,Ta,Tb,h,x
