@@ -1,22 +1,12 @@
 import sys
-from PIL import Image
+
 from graficas import *
 from matriz import solucion_sistema1D,solucion_sistema1D_Poisson, solucion_sistema1D_Neumann,solucion_sistema_conductividad_variable
 import numpy as np
-from Parametros import Pedir_Parametros_basicos
-#######33
-Im2=Image.open('Poisson_Dirichlet.png')
-######3
-print('Selecciona el tipo de problema',end='\n')    
-print('-----------------------------------------')
-print('1) Conduccion de calor estacionaria, conductividad constante ',end='\n')
-print('2) Conduccion de calor, ecuacion de Poisson condicion tipo Dirichlet ',end='\n')
-print('3) Conduccion de calor, ecuacion de Poisson condicion tipo Neumman',end='\n')
-print('4) Conduccion de calor, ecuacion de Poisson conductividad no constante',end='\n')
-try:
-    seleccion=int(input())
-except:
-    print("No seas ñero")
+from Parametros import *
+
+seleccion=menu()
+
 if 0<seleccion<5 :
     print("hola")
     pass
@@ -39,25 +29,25 @@ if seleccion ==1:
                 
     elif fuente == 3:
         Q=0    
-    plot_dominio(x_inicial,x_final,N)
+    plot_dominio(x_inicial,x_final,N,cadena='Conduccion de calor estacionaria, conductividad constante')
     u=solucion_sistema1D(N,h,Ta,Tb,kappa,Q)
-    plot_dominio2(x,u)
+    plot_dominio2(x,u,cadena='Conduccion de calor estacionaria, conductividad constante')
 
 
 
 
 if seleccion==2:
-    Im2.show()
+    
     x_inicial,x_final,N,Ta,Tb,h,x=Pedir_Parametros_basicos()
     f=float(input('| Valor de f      : f ='))
-    plot_dominio(x_inicial,x_final,N)
+    plot_dominio(x_inicial,x_final,N,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Dirichlet')
     u=solucion_sistema1D_Poisson(N, h,Ta,Tb,f)
-    plot_dominio2(x,u)
+    plot_dominio2(x,u,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Dirichlet')
 
 if seleccion==3:
 
     x_inicial,x_final,N,Ta,Tb,h,x=Pedir_Parametros_basicos()
-    plot_dominio(x_inicial,x_final,N)
+    plot_dominio(x_inicial,x_final,N,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Neumma')
     kappa=1
     print('Condicion de Neummann \n 1)Izquierda\n 2) Derecha\n')
     tipo_cond=int(input())
@@ -81,11 +71,11 @@ if seleccion==3:
         pass
 
     u = solucion_sistema1D_Neumann(N,h,kappa,Q,Ta,Tb,tipo)
-    plot_dominio2(x,u)
+    plot_dominio2(x,u,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Neumma')
 
 if seleccion==4:
     x_inicial,x_final,N,Ta,Tb,h,x=Pedir_Parametros_basicos()
-    plot_dominio(x_inicial,x_final,N)
+    plot_dominio(x_inicial,x_final,N,cadena='Conduccion de calor, ecuacion de Poisson conductividad no constante')
     
     fuente=int(input('Existe alguna fuente, sumidero o ninguno \n 1)fuente \n 2)sumidero \n 3) ninguno \n'))
     if fuente ==1:
@@ -114,7 +104,7 @@ if seleccion==4:
         kappa=eval(a)
         pass
     u=solucion_sistema_conductividad_variable(N,h,Ta,Tb,kappa,Q)
-    plot_dominio2(x,u)
+    plot_dominio2(x,u,cadena='Conduccion de calor, ecuacion de Poisson conductividad no constante')
 
 
 

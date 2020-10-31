@@ -1,4 +1,5 @@
 import numpy as np
+import sys
 def Pedir_Parametros_basicos():
     
     x_inicial= float(input('| Punto inicial del dominio : x_inicial =  '))
@@ -12,3 +13,20 @@ def Pedir_Parametros_basicos():
     x=np.linspace(x_inicial,x_final,N+2)
 
     return x_inicial,x_final,N,Ta,Tb,h,x
+
+def menu():
+    """
+    docstring
+    """
+    print('Selecciona el tipo de problema',end='\n')    
+    print('-----------------------------------------')
+    print('1) Conduccion de calor estacionaria, conductividad constante ',end='\n')
+    print('2) Conduccion de calor, ecuacion de Poisson condicion tipo Dirichlet ',end='\n')
+    print('3) Conduccion de calor, ecuacion de Poisson condicion tipo Neumman',end='\n')
+    print('4) Conduccion de calor, ecuacion de Poisson conductividad no constante',end='\n')
+    try:
+        seleccion=int(input())
+    except:
+        print("No seas ñero")
+        sys.exit()
+    return seleccion
