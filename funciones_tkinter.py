@@ -77,13 +77,19 @@ def opcion1(ventana):
 
     opciones = tkinter.Toplevel(ventana)
     opciones.title('Conduccion de calor estacionaria')
+    for i in range(9):
+        opciones.rowconfigure(i,weight=1)
+    # for i in range(1):
+    #     opciones.columnconfigure(i,weight=1)
+    opciones.columnconfigure(0,weight=1)
+    opciones.columnconfigure(1,weight=1)
+    
     #opciones.geometry('400x300')
 
     myImg=Image.open('Estacionario.png')
     myImg= myImg.resize((300,150))
     myImg=ImageTk.PhotoImage(myImg)
-    
-    L0=tkinter.Label(opciones,image= myImg).grid(row=0,column=0,columnspan=2)
+    L0=tkinter.Label(opciones,image= myImg).grid(row=0,column=0,columnspan=2,)
     
 
     L1=tkinter.Label(opciones, text ='x inicial (m) :').grid(row=1,column=0)
@@ -131,6 +137,15 @@ def opcion2(ventana):
 
     opciones = tkinter.Toplevel(ventana)
     opciones.title('Conduccion de calor eq Poisson')
+
+    for i in range(8):
+        opciones.rowconfigure(i,weight=1)
+    # for i in range(1):
+    #     opciones.columnconfigure(i,weight=1)
+    opciones.columnconfigure(0,weight=1)
+    opciones.columnconfigure(1,weight=1)
+    
+
 
     myImg=Image.open('Poisson_Dirichlet.png')
     myImg= myImg.resize((300,150))
@@ -182,6 +197,14 @@ def opcion3(ventana):
     opciones = tkinter.Toplevel(ventana)
     opciones.title('Conduccion de calor condicion Neumman')
 
+    for i in range(10):
+        opciones.rowconfigure(i,weight=1)
+    # for i in range(1):
+    #     opciones.columnconfigure(i,weight=1)
+    opciones.columnconfigure(0,weight=1)
+    opciones.columnconfigure(1,weight=1)
+    
+
     myImg=Image.open('Numman.png')
     myImg= myImg.resize((300,150))
     myImg=ImageTk.PhotoImage(myImg)
@@ -213,7 +236,7 @@ def opcion3(ventana):
     kappa = tkinter.Entry(opciones)
     kappa.grid(row = 6,column=1)
 
-    L7=tkinter.Label(opciones, text ='Fuente (-) o sumidero Q (+)').grid(row=7,column=0)
+    L7=tkinter.Label(opciones, text ='Fuente (-) o sumidero Q (+) \n Comando de Python en funcion del dominio x\n ejemplo: np.exp(x)').grid(row=7,column=0)
     Q = tkinter.Entry(opciones)
     Q.grid(row = 7,column=1)
 
@@ -237,6 +260,14 @@ def opcion4(ventana):
 
     opciones = tkinter.Toplevel(ventana)
     opciones.title('Conduccion de calor conductividad variable')
+
+    for i in range(9):
+        opciones.rowconfigure(i,weight=1)
+    # for i in range(1):
+    #     opciones.columnconfigure(i,weight=1)
+    opciones.columnconfigure(0,weight=1)
+    opciones.columnconfigure(1,weight=1)
+    
 
     myImg=Image.open('Conduc_variable.png')
     myImg= myImg.resize((300,150))
@@ -265,7 +296,7 @@ def opcion4(ventana):
     Tb = tkinter.Entry(opciones)
     Tb.grid(row =5,column=1)
 
-    L6=tkinter.Label(opciones, text ='Conductividad termica kappa variable  :').grid(row=6,column=0)
+    L6=tkinter.Label(opciones, text ='Conductividad termica kappa variable \nComando de python en funcion de x  :').grid(row=6,column=0)
     kappa = tkinter.Entry(opciones)
     kappa.grid(row = 6,column=1)
 
@@ -287,4 +318,4 @@ def Contacto():
     """
     docstring
     """
-    messagebox.showinfo('Creadores', 'Creado por : \n Bonfil Alan \n Flores Abraham \n Rosas Avila Jose Daniel \n Github: https://github.com/DanielR59/Conduccion_de_Calor')
+    messagebox.showinfo('Creadores', 'Creado por : \n Alan de la Fuente Bonfil \n Abraham Flores Miranda \n José Daniel Rosas Avila \n Github: https://github.com/DanielR59/Conduccion_de_Calor')

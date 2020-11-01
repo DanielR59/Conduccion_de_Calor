@@ -17,6 +17,9 @@ except FileExistsError:
 #
 ventana = tkinter.Tk()
 ventana.geometry("400x300")
+ventana.iconbitmap('fire.ico')
+ventana.title('Conduccion de calor 1D')
+
 my_menu = tkinter.Menu(ventana)
 ventana.config(menu = my_menu)
 
@@ -27,19 +30,19 @@ contact_Menu.add_command(label = 'Contacto',command = Contacto )
 
 
 etiqueta = tkinter.Label(ventana, text='Conduccion de calor', bg='red')
-etiqueta.pack(fill = tkinter.X)
+etiqueta.pack(fill = tkinter.X, expand = True)
 
 boton1 = tkinter.Button(ventana, text = 'Conduccion de calor estacionaria, conductividad constante', padx=20,pady=20, command =lambda : opcion1(ventana))
-boton1.pack(fill=tkinter.BOTH)
+boton1.pack(fill=tkinter.BOTH, expand = True)
 
 boton2 = tkinter.Button(ventana, text = 'Conduccion de calor, ecuacion de Poisson condicion tipo Dirichlet', padx=20,pady=20, command=lambda : opcion2(ventana))
-boton2.pack(fill=tkinter.BOTH)
+boton2.pack(fill=tkinter.BOTH, expand = True)
 
 boton3 = tkinter.Button(ventana, text = 'Conduccion de calor, ecuacion de Poisson condicion tipo Neumman', padx=20,pady=20, command = lambda :opcion3(ventana))
-boton3.pack(fill=tkinter.BOTH)
+boton3.pack(fill=tkinter.BOTH, expand = True)
 
 boton4 = tkinter.Button(ventana, text = 'Conduccion de calor, ecuacion de Poisson conductividad no constante', padx=20,pady=20, command = lambda : opcion4(ventana))
-boton4.pack(fill=tkinter.BOTH)
+boton4.pack(fill=tkinter.BOTH, expand = True)
 
 
 
