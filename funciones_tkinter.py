@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import tkinter
 from tkinter import messagebox
 from graficas import *
@@ -68,6 +69,21 @@ def Proceso4(diccionario):
     
     plot_dominio2(x,u,cadena='Conduccion de calor, ecuacion de Poisson conductividad no constante')
 
+def Proceso5(diccionario):
+    """
+    docstring
+    """
+    
+    x_inicial,x_final,N,Ta,Tb,h,x=get_Parametros_basicos(diccionario)
+    plot_dominio(x_inicial,x_final,N,cadena='Dominio generado de la solucion analitica')
+    
+    
+    u=eval(diccionario['Sol_analitica'].get())
+    
+
+    save_Parametros(diccionario,x,u,cadena='Solucion Analitica')
+    
+    plot_dominio2(x,u,cadena='Solucion Analitica')
 
 
 def opcion1(ventana):
@@ -313,7 +329,47 @@ def opcion4(ventana):
     
 
     opciones.mainloop()
+    
 
+def opcion5(ventana):
+    """
+    docstring
+    """
+    opciones = tkinter.Toplevel(ventana)
+    opciones.title('Calculo de solucion analitica')
+
+    for i in range(6):
+        opciones.rowconfigure(i,weight=1)
+    # for i in range(1):
+    #     opciones.columnconfigure(i,weight=1)
+    opciones.columnconfigure(0,weight=1)
+    opciones.columnconfigure(1,weight=1)
+    
+    
+    L1=tkinter.Label(opciones, text ='x inicial :').grid(row=1,column=0)
+    x_inicial = tkinter.Entry(opciones)
+    x_inicial.grid(row =1,column=1)
+
+    L2=tkinter.Label(opciones, text ='x final :').grid(row=2,column=0)
+    x_final = tkinter.Entry(opciones)
+    x_final.grid(row =2,column=1)
+
+    L3=tkinter.Label(opciones, text ='Numero de nodos sin contar fronteras :').grid(row=3,column=0)
+    Nodos = tkinter.Entry(opciones)
+    Nodos.grid(row =3,column=1)
+
+    
+    sol_analitica=tkinter.Label(opciones, text ='Ingresa la solución analitica \nComando de python en funcion de x  u(x):').grid(row=4,column=0)
+    solucion = tkinter.Entry(opciones)
+    solucion.grid(row=4,column=1)
+
+    diccionario={'x_inicial' : x_inicial, 'x_final' : x_final, 'Nodos' : Nodos, 'Sol_analitica' : solucion }
+
+    Calcular = tkinter.Button(opciones, text = 'Calcular', command=lambda: Proceso5(diccionario)).grid(row=5)
+
+
+    opciones.mainloop()
+    
 def Contacto():
     """
     docstring

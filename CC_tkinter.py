@@ -16,7 +16,7 @@ except FileExistsError:
     pass
 #
 ventana = tkinter.Tk()
-ventana.geometry("400x300")
+ventana.geometry("400x400")
 ventana.iconbitmap('fire.ico')
 ventana.title('Conduccion de calor 1D')
 
@@ -44,9 +44,11 @@ boton3.pack(fill=tkinter.BOTH, expand = True)
 boton4 = tkinter.Button(ventana, text = 'Conduccion de calor, ecuacion de Poisson conductividad no constante', padx=20,pady=20, command = lambda : opcion4(ventana))
 boton4.pack(fill=tkinter.BOTH, expand = True)
 
-
+boton5 = tkinter.Button(ventana, text = 'Solución analitica',padx=20,pady=20, command = lambda : opcion5(ventana,))
+boton5.pack(fill=tkinter.BOTH, expand = True)
 
 ventana.mainloop()
+
 
 
 

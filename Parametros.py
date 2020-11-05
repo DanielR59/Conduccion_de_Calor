@@ -36,12 +36,31 @@ def menu():
 
 
 def get_Parametros_basicos(diccionario):
+    try:
+        x_inicial=float(diccionario['x_inicial'].get())
+        x_final=float(diccionario['x_final'].get())
+        N=int(diccionario['Nodos'].get())
+        Ta=float(diccionario['Ta'].get())
+        Tb=float(diccionario['Tb'].get())
+    
+    except KeyError:
+        print('Ocurrio una excepcion, se sustituye valor')
+        if 'x_inicial' not in diccionario:
+            x_inicial=0
+        if 'x_final' not in diccionario:
+            x_final=1
+        if 'Nodos' not in diccionario:
+            N=50
+        if 'Ta' not in diccionario:
+            Ta=0
+        if 'Tb' not in diccionario:
+            Tb=1
+        
 
-    x_inicial=float(diccionario['x_inicial'].get())
-    x_final=float(diccionario['x_final'].get())
-    N=int(diccionario['Nodos'].get())
-    Ta=float(diccionario['Ta'].get())
-    Tb=float(diccionario['Tb'].get())
+        pass
+    except ValueError:
+        print('Error, no metiste un valor')
+        sys.exit()
     
     
     h=(x_final-x_inicial)/(N+1)
