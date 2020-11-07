@@ -290,10 +290,24 @@ def k_half(k):
 
 
 def matriz_izquierda_conductividad_variable(k):
+    """
+    matriz_izquierda_conductividad_variable Funcion que genera la matriz izquierda del sistema a partir del vector k cuya longitud edebe ser del número de nodos del sistema más las 2 fronteras, es decir len(k)=N+2
 
+    
+    
+
+    Parameters
+    ----------
+    k : aray
+        vector de conductividad variable
+
+    Returns
+    -------
+    MATRIZ
+        Matriz de tamaño NxN llenada con valores de k_medios
     """
-    docstring
-    """
+
+    
     n=len(k)
     k_medios=k_half(k)
     MATRIZ=np.zeros((n-2,n-2))
@@ -309,8 +323,29 @@ def matriz_izquierda_conductividad_variable(k):
 
 def matriz_derecha_conductividad_variable(f,k,h,Ta,Tb):
     """
-    docstring
+    matriz_derecha_conductividad_variable (f,k,h,Ta,Tb)
+
+    Funcion que genera la matriz derecha del sistema del problema de Conduccion de calor con conductividad va
+
+    Parameters
+    ----------
+    f : [float]
+        [Valor de fuente o sumidero del problema de conduccion de calor]
+    k : [array]
+        Arreaglo de conductividad
+    h : [float]
+        Espaciamiento entre nodos de la malla
+    Ta : [float]
+        Condicion de frontera izquierda del sistema
+    Tb : [float]
+        Condicion de frontera derecha del sistema
+
+    Returns
+    -------
+    MD[type]
+        Matriz derecha
     """
+    
     N=len(k)-2
     f=np.ones(N)*f*h**2
     k_medios=k_half(k)

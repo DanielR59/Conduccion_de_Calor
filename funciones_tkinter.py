@@ -1,15 +1,23 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import tkinter
-from tkinter import messagebox
+from tkinter import messagebox,filedialog, StringVar
 from graficas import *
 from matriz import solucion_sistema1D, solucion_sistema1D_Poisson, solucion_sistema1D_Neumann,solucion_sistema_conductividad_variable
-from Parametros import get_Parametros_basicos,save_Parametros
+from Parametros import get_Parametros_basicos,save_Parametros2
 from PIL import Image,ImageTk
 
 def Proceso1(diccionario):
     """
-    docstring
+    Proceso1 Funcion que realiza el proceso correspondiente de la opcion 1
+
+    
+    
+
+    Parameters
+    ----------
+    diccionario : [type]
+        diccionario de los elementos definidos en la opcion 
     """
     # print(diccionario['x_inicial'].get())
     # print(diccionario['x_final'].get())
@@ -18,13 +26,21 @@ def Proceso1(diccionario):
     Q=float(diccionario['Q'].get())
     plot_dominio(x_inicial,x_final,N,cadena='Conduccion de calor estacionaria, conductividad constante')
     u=solucion_sistema1D(N,h,Ta,Tb,kappa,Q)
-    save_Parametros(diccionario,x,u,cadena='Conduccion de calor estacionaria, conductividad constante')
+    save_Parametros2(diccionario,x,u,cadena='Conduccion de calor estacionaria, conductividad constante')
     
     plot_dominio2(x,u,cadena='Conduccion de calor estacionaria, conductividad constante')
 
 def Proceso2(diccionario):
     """
-    docstring
+    Proceso2 Funcion que realiza el proceso correspondiente de la opcion 2
+
+    
+    
+
+    Parameters
+    ----------
+    diccionario : [type]
+        diccionario de los elementos definidos en la opcion 
     """
     # print(diccionario['x_inicial'].get())
     # print(diccionario['x_final'].get())
@@ -32,13 +48,21 @@ def Proceso2(diccionario):
     f=float(diccionario['f'].get())
     plot_dominio(x_inicial,x_final,N,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Dirichlet')
     u=solucion_sistema1D_Poisson(N, h,Ta,Tb,f)
-    save_Parametros(diccionario,x,u,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Dirichlet')
+    save_Parametros2(diccionario,x,u,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Dirichlet')
     
     plot_dominio2(x,u,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Dirichlet')
 
 def Proceso3(diccionario):
     """
-    docstring
+    Proceso3 Funcion que realiza el proceso correspondiente de la opcion 3
+
+    
+    
+
+    Parameters
+    ----------
+    diccionario : [type]
+        diccionario de los elementos definidos en la opcion 
     """
     
     x_inicial,x_final,N,Ta,Tb,h,x=get_Parametros_basicos(diccionario)
@@ -49,13 +73,21 @@ def Proceso3(diccionario):
     print(Q)
     Tipo=diccionario['Tipo'].get()
     u = solucion_sistema1D_Neumann(N,h,kappa,Q,Ta,Tb,Tipo)
-    save_Parametros(diccionario,x,u,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Neumman')
+    save_Parametros2(diccionario,x,u,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Neumman')
     
     plot_dominio2(x,u,cadena='Conduccion de calor, ecuacion de Poisson condicion tipo Neumman')
 
 def Proceso4(diccionario):
     """
-    docstring
+    Proceso4 Funcion que realiza el proceso correspondiente de la opcion 4
+
+    
+    
+
+    Parameters
+    ----------
+    diccionario : [type]
+        diccionario de los elementos definidos en la opcion 
     """
     
     x_inicial,x_final,N,Ta,Tb,h,x=get_Parametros_basicos(diccionario)
@@ -65,13 +97,21 @@ def Proceso4(diccionario):
     kappa=eval(diccionario['kappa'].get())
     
     u=solucion_sistema_conductividad_variable(N,h,Ta,Tb,kappa,Q)
-    save_Parametros(diccionario,x,u,cadena='Conduccion de calor, ecuacion de Poisson conductividad no constante')
+    save_Parametros2(diccionario,x,u,cadena='Conduccion de calor, ecuacion de Poisson conductividad no constante')
     
     plot_dominio2(x,u,cadena='Conduccion de calor, ecuacion de Poisson conductividad no constante')
 
 def Proceso5(diccionario):
     """
-    docstring
+    Proceso5 Funcion que realiza el proceso correspondiente de la opcion 5
+
+    
+    
+
+    Parameters
+    ----------
+    diccionario : [type]
+        diccionario de los elementos definidos en la opcion 
     """
     
     x_inicial,x_final,N,Ta,Tb,h,x=get_Parametros_basicos(diccionario)
@@ -81,7 +121,7 @@ def Proceso5(diccionario):
     u=eval(diccionario['Sol_analitica'].get())
     
 
-    save_Parametros(diccionario,x,u,cadena='Solucion Analitica')
+    save_Parametros2(diccionario,x,u,cadena='Solucion Analitica')
     
     plot_dominio2(x,u,cadena='Solucion Analitica')
 
@@ -370,6 +410,50 @@ def opcion5(ventana):
 
     opciones.mainloop()
     
+
+def opcion6(ventana):
+    """
+    docstring
+    """
+    opciones = tkinter.Toplevel(ventana)
+    opciones.title('Calculo de error')
+
+    for i in range(6):
+        opciones.rowconfigure(i,weight=1)
+    # for i in range(1):
+    #     opciones.columnconfigure(i,weight=1)
+    opciones.columnconfigure(0,weight=1)
+    opciones.columnconfigure(1,weight=1)
+    a=StringVar()
+    # a2=StringVar()
+    custName=StringVar()
+    Cargar_sol_analitica = tkinter.Button(opciones, text = 'Cargar sol analitica', command=lambda :open_csv(custName)).grid(row=1,column=0)
+    
+    Cargar_sol_numerica = tkinter.Button(opciones, text = 'Cargar sol numerica', command=lambda:open_csv(a)).grid(row=1,column=1)
+    
+    
+    Cargar_archivos = tkinter.Button(opciones, text = 'Cargar archivos', command=lambda:open_archivos(custName,a)).grid(row=2,column=1)
+    
+
+    opciones.mainloop()
+
+def open_csv(custName):
+    
+    """
+    docstring
+    """
+    custName=StringVar()
+    a=filedialog.askopenfilename(initialdir = "./Soluciones",title = "Select file",filetypes=(("csv files","*.csv"),("all files","*.*")))
+    custName.set(a)
+#    print(custName.get())
+    return custName
+
+def open_archivos(custName,a):
+    """
+    docstring
+    """
+    print(custName.get(),a.get())
+
 def Contacto():
     """
     docstring
