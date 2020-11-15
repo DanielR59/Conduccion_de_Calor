@@ -453,7 +453,7 @@ def opcion6(ventana):
     """
     opciones = tkinter.Toplevel(ventana)
     opciones.title('Calculo de error')
-
+    opciones.geometry("950x600")
     for i in range(6):
         opciones.rowconfigure(i,weight=1)
     # for i in range(1):
