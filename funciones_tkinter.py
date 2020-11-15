@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tkinter
 from tkinter import messagebox,filedialog, StringVar
+from Error import csv_to_list,describe_error
 from graficas import *
 from matriz import solucion_sistema1D, solucion_sistema1D_Poisson, solucion_sistema1D_Neumann,solucion_sistema_conductividad_variable
 from Parametros import get_Parametros_basicos,save_Parametros2
@@ -125,6 +126,41 @@ def Proceso5(diccionario):
     
     plot_dominio2(x,u,cadena='Solucion Analitica')
 
+def Proceso6(opciones,diccionario):
+    """
+    Proceso5 Funcion que realiza el proceso correspondiente de la opcion 6
+
+    
+    
+
+    Parameters
+    ----------
+    diccionario : [type]
+        diccionario de los elementos definidos en la opcion 
+    """
+    
+    archivo1=diccionario['Analitica'].get()
+    archivo1="./Soluciones/"+archivo1
+    
+    archivo2=diccionario['Numerica'].get()
+    archivo2="./Soluciones/"+archivo2
+    
+
+    D1,Sol1=csv_to_list(archivo1)
+    D2,Sol2=csv_to_list(archivo2)
+    Error=describe_error(np.array(Sol1),np.array(Sol2),1)
+
+    # label = tkinter.Label(opciones, text= Error).grid()
+
+    # text=tkinter.Text(label)
+    # text.grid()
+    # scrol=tkinter.Scrollbar(label,command=text.yview)
+    # text.config(yscrollcommand=scrol.set)
+    # scrol.grid()
+    texto=tkinter.Text(opciones,width=120,height=30)
+    texto.grid(row=4)
+    texto.insert(tkinter.END,Error)
+    
 
 def opcion1(ventana):
     """
@@ -424,15 +460,20 @@ def opcion6(ventana):
     #     opciones.columnconfigure(i,weight=1)
     opciones.columnconfigure(0,weight=1)
     opciones.columnconfigure(1,weight=1)
-    a=StringVar()
-    # a2=StringVar()
-    custName=StringVar()
-    Cargar_sol_analitica = tkinter.Button(opciones, text = 'Cargar sol analitica', command=lambda :open_csv(custName)).grid(row=1,column=0)
     
-    Cargar_sol_numerica = tkinter.Button(opciones, text = 'Cargar sol numerica', command=lambda:open_csv(a)).grid(row=1,column=1)
+
+    L1=tkinter.Label(opciones, text ='Nombre archivo solucion analitica:').grid(row=1,column=0)
+    archivo_analitica = tkinter.Entry(opciones)
+    archivo_analitica.grid(row =2,column=0)
+
+    L2=tkinter.Label(opciones, text ='Nombre archivo solucion numerica :').grid(row=1,column=1)
+    archivo_numerica = tkinter.Entry(opciones)
+    archivo_numerica.grid(row =2,column=1)
+    
+    diccionario={'Analitica' : archivo_analitica, 'Numerica' : archivo_numerica }
     
     
-    Cargar_archivos = tkinter.Button(opciones, text = 'Cargar archivos', command=lambda:open_archivos(custName,a)).grid(row=2,column=1)
+    Cargar_archivos = tkinter.Button(opciones, text = 'Cargar archivos', command=lambda:Proceso6(opciones,diccionario)).grid(row=3,column=1)
     
 
     opciones.mainloop()
